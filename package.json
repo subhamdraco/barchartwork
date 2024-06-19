@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "react-date-range": "^2.0.1",
+    "rsuite": "^5.64.1"
+  }
+}

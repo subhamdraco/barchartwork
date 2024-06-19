@@ -1,5 +1,5 @@
 import React from 'react'
-import './CityBreaks.css';
+import './Hotels.css';
 
 export default function CityBreaks() {
   return (

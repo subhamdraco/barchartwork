@@ -7,6 +7,7 @@ import Recommendation from '../../Components/RecommendationSection/Recommendatio
 import HolidayPlanSection from '../../Components/HolidayPlanSection/HolidayPlanSection';
 import FavouritesSection from '../../Components/FavouritesSection/FavouritesSection';
 import RecentHolidays from '../../Components/RecentHolidays/RecentHolidays';
+import NeedInspiration from '../../Components/NeedInspiration/NeedInspiration';
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
         <HolidayPlanSection itemHolidayPlanTitle="Plan Your Summer Holidays"/>
         <FavouritesSection />
         <RecentHolidays />
+        <NeedInspiration/>
     </div>
   )
 }

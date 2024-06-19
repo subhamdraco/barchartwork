@@ -1,7 +1,7 @@
 import React from 'react'
-import './Destinations.css';
+import './Flights.css';
 
-export default function Destinations() {
+export default function Flights() {
   return (
     <div>
       destinatin

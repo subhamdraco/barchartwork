@@ -21,14 +21,17 @@ export default function NavBar() {
                     <Nav.Link href='/' className='text-light'>
                         Home
                     </Nav.Link>
+                    <Nav.Link href='/flights' className='text-light'>
+                        Flights
+                    </Nav.Link>
+                    <Nav.Link href='/hotels' className='text-light text-capitalize'>
+                        Hotels
+                    </Nav.Link>
+                    <Nav.Link href='/buses' className='text-light'>
+                        Buses
+                    </Nav.Link>
                     <Nav.Link href='/holidays' className='text-light'>
                         Holidays
-                    </Nav.Link>
-                    <Nav.Link href='/city-breaks' className='text-light text-capitalize'>
-                        City Breakers
-                    </Nav.Link>
-                    <Nav.Link href='/destinations' className='text-light'>
-                        Destinations
                     </Nav.Link>
                 </Nav>
                 <Button variant='light'>

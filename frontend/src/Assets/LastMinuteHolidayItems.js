@@ -1,27 +1,27 @@
-import LondonImg from "./Images/holiday-london.jpg"
-import DubaiImg from "./Images/holiday-dubai.jpg"
-import ParisImg from "./Images/holiday-paris.jpg"
+import KashmirImg from "./Images/kashmir.jpg"
+import AndamanImg from "./Images/andaman.jpg"
+import RajasthanImg from "./Images/rajasthan.jpg"
 
 
 let LasHolidaysItems = [
 {
     id: 1,
-    itemImage: LondonImg,
-    itemTitle: "London",
+    itemImage: KashmirImg,
+    itemTitle: "Kashmir",
     itemDescription: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto alias nobis dolores."
 
 },
 {
     id: 2,
-    itemImage: DubaiImg,
-    itemTitle: "Dubai",
+    itemImage: AndamanImg,
+    itemTitle: "Andaman And Nicobar Islands",
     itemDescription: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto alias nobis dolores."
 
 },
 {
     id: 3,
-    itemImage: ParisImg,
-    itemTitle: "Paris",
+    itemImage: RajasthanImg,
+    itemTitle: "Rajasthan",
     itemDescription: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto alias nobis dolores."
 
 }

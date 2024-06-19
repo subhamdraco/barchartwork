@@ -32,7 +32,7 @@ export default function Herosection() {
                             </h1>
                             <p className="text-start">
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates consequatur perferendis vel, corrupti quibusdam aliquam? Consequatur sapiente eius, explicabo doloribus earum, modi ipsum assumenda facere, dolorem optio omnis deleniti neque!
-                                <GreenBtn btnTitle="Book A Flight Now" btnLink="/city-breaks"/>
+                                <GreenBtn btnTitle="Book A Flight Now" btnLink="/flights"/>
                             </p>
                         </div> 
                         <div className='col-lg-6 d-none d-lg-block'></div>
@@ -49,10 +49,26 @@ export default function Herosection() {
                             </h1>
                             <p className="text-start">
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates consequatur perferendis vel, corrupti quibusdam aliquam? Consequatur sapiente eius, explicabo doloribus earum, modi ipsum assumenda facere, dolorem optio omnis deleniti neque!
-                                <GreenBtn btnTitle="Check All Hotels" btnLink="/destinations" />
+                                <GreenBtn btnTitle="Check All Hotels" btnLink="/hotels" />
                             </p>
                         </div> 
                        
+                    </div>
+                </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item className='carousel-item4 vh-100'>
+                <Carousel.Caption className='h-100'>
+                    <div className="row h-100">
+                        <div className="col-lg-6 d-flex flex-column align-items-start justify-content-center">
+                            <h1 className="text-capitalize text-start">
+                                The Road Awaits – Book Your Seat Today
+                            </h1>
+                            <p className="text-start">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates consequatur perferendis vel, corrupti quibusdam aliquam? Consequatur sapiente eius, explicabo doloribus earum, modi ipsum assumenda facere, dolorem optio omnis deleniti neque!
+                                <GreenBtn btnTitle="Book A Bus Now" btnLink="/buses"/>
+                            </p>
+                        </div> 
+                        <div className='col-lg-6 d-none d-lg-block'></div>
                     </div>
                 </Carousel.Caption>
             </Carousel.Item>

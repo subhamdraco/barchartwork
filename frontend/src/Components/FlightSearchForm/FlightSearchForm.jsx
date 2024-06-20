@@ -27,7 +27,6 @@ export default function FlightSearchForm() {
         to: '',
         onward : '',
         return:'',
-        passengers: ''
     })
 
     const onInputChange = (e) => {
@@ -38,14 +37,15 @@ export default function FlightSearchForm() {
             [name] : value
         };
     });
-        console.log(formdata)
     };
 
     const formsubmit = (e) =>{
         e.preventDefault();
-        setformdata({...formdata, passengers : options});
-        console.log(formdata);
-        console.log(options)
+        const finaldata = {
+            ...formdata,
+            passengers: options
+        }
+        console.log(finaldata);
     }
 
     // const handleSearch = () => {
@@ -80,14 +80,14 @@ export default function FlightSearchForm() {
                     </div>
                     <div className="col">
                         <Form.Group className="mb-3" controlId="onward">
-                            <Form.Label>Return</Form.Label>
-                            <Form.Control type="date" name="return" value={formdata.return} onChange={onInputChange}/>
+                            <Form.Label>Onward</Form.Label>
+                            <Form.Control type="date" name="onward" value={formdata.onward} onChange={onInputChange}/>
                         </Form.Group>
                     </div>
                     <div className="col">
-                        <Form.Group className="mb-3" controlId="onward">
-                            <Form.Label>Onward</Form.Label>
-                            <Form.Control type="date" name="onward" value={formdata.onward} onChange={onInputChange}/>
+                        <Form.Group className="mb-3" controlId="return">
+                            <Form.Label>Return</Form.Label>
+                            <Form.Control type="date" name="return" value={formdata.return} onChange={onInputChange}/>
                         </Form.Group>
                     </div>
                     
@@ -99,14 +99,12 @@ export default function FlightSearchForm() {
                     <div className="col">
                         <div className="headerSearchItem">
                         <div className="theme">
-                            <label htmlFor="passengers">Travellers</label>
-                            <input
-                            type='text'
-                            id='passengers'
-                            onClick={() => setOpenOptions(!openOptions)}
-                            onChange={onInputChange}
-                            name = 'passengers'
-                            className="headerSearchText" value={`${options.adult} adult · ${options.children} children · ${options.infant} infant`}/>
+                            <Form.Group className="mb-3" controlId="travel">
+                                <Form.Label>Travellers</Form.Label>
+                                <br/>
+                                <span onClick={() => setOpenOptions(!openOptions)}>{`${options.adult} adult· ${options.children} children· ${options.infant} infant`}</span>
+                                <Form.Control type="text" name="passengers" value= {formdata.passengers}  onChange={onInputChange}  className='hidden-value'/>
+                            </Form.Group>
                         </div>
                         {openOptions && (
                         <div className="options">

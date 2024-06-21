@@ -5,8 +5,8 @@ import FlightSearchForm from '../../Components/FlightSearchForm/FlightSearchForm
 
 export default function Flights() {
   return (
-    <div className='flight-section'>
-      <SecondHeroSection FlightHeroTitle="Where Every Journey Takes Flight"/>
+    <div>
+      <div className="flight-section"><SecondHeroSection FlightHeroTitle="Where Every Journey Takes Flight"/></div>
       <FlightSearchForm/>
     </div>
   )

@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 import './FlightSearchForm.css'
-import { Container, Form , Button } from 'react-bootstrap'
+import { Form , Button } from 'react-bootstrap'
 import { FaLocationDot } from "react-icons/fa6";
 import { BsCalendarDate } from "react-icons/bs";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { MdFlightClass } from "react-icons/md";
 import { MdFlightTakeoff } from "react-icons/md";
+import Airports from '../../Assets/Airports';
 
 
 export default function FlightSearchForm() {
-
     const [options, setOptions] = useState({
         adult: 1,
         children: 0,
@@ -58,9 +58,8 @@ export default function FlightSearchForm() {
     //     navigate("/hotels", { state: { destination, date, options } });
     //   };
   return (
-    <div className='position-relative'>
-        <Container>
-            <Form className='search-form  mx-auto p-4 mt-4 mt-lg-0 z-2 rounded' onSubmit={formsubmit}>
+        <div className='wrapper-form'>
+            <Form className='flight-form mx-auto p-4 mt-lg-0 z-2 rounded mt-sm-2 ' onSubmit={formsubmit}>
                 <div className="row">
                     <div className="col d-flex justify-content-start">
                     <Form.Check
@@ -79,20 +78,25 @@ export default function FlightSearchForm() {
                     value='round'
                     onChange={onInputChange}
                 />
+                
                     </div>
                 </div>
                 <div className="row mt-2">
                     <div className="col-lg-3">
-                        <Form.Group className="mb-3" controlId="to">
+                        <div className="mb-3" id="from">
                             <Form.Label><span>{<FaLocationDot />}</span> Depart Airport</Form.Label>
-                            <Form.Control type="text" name="to" value= {formdata.passengers} onChange={onInputChange} required/>
-                        </Form.Group>
+                            <Form.Select aria-label="from" name="from" onChange={onInputChange}>
+                            {Airports.map(air => {return <option key={air.value} value={air.value}>{air.label}</option>})};
+                            </Form.Select>
+                        </div>
                     </div>
                     <div className="col-lg-3">
-                        <Form.Group className="mb-3" controlId="from">
+                        <div className="mb-3" id="to">
                             <Form.Label><span>{<FaLocationDot />}</span> Arrival Airport</Form.Label>
-                            <Form.Control type="text" name="from" value= {formdata.passengers} onChange={onInputChange} required/>
-                        </Form.Group>
+                            <Form.Select aria-label="to" name="to" onChange={onInputChange}>
+                            {Airports.map(air => {return <option key={air.value} value={air.value}>{air.label}</option>})};
+                            </Form.Select>
+                        </div>
                     </div>
                     <div className="col-lg-3">
                         <Form.Group className="mb-3" controlId="onward">
@@ -143,7 +147,7 @@ export default function FlightSearchForm() {
                                 </div>
                                 <div className="row  mt-3">
                                     <div className="col-lg-12 col-sm-12 d-flex justify-content-center">
-                                        <Button className='btn-secondary' onClick={() => setOpenOptions(!openOptions)}>Close</Button>
+                                        <Button className='btn-secondary btn-sm' onClick={() => setOpenOptions(!openOptions)}>Close</Button>
                                     </div>
                                 </div>
                             </div>
@@ -163,7 +167,6 @@ export default function FlightSearchForm() {
                 </div>
                 <Button className="btn btn-dark"  type='submit'><MdFlightTakeoff className='btn-icon'/> Search</Button>
             </Form>
-        </Container>
-    </div>
+        </div>
   )
 }

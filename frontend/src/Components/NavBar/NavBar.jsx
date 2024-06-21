@@ -18,21 +18,21 @@ export default function NavBar() {
             <Navbar.Toggle aria-controls='basic-navbar-nav' className='text-light'/>
             <Navbar.Collapse id='basic-navbar-nav'>
                 <Nav className='me-auto w-100 justify-content-center'>
-                    <Nav.Link href='/' className='text-light'>
+                    <Link to='/' className='text-light nav-link'>
                         Home
-                    </Nav.Link>
-                    <Nav.Link href='/flights' className='text-light'>
+                    </Link>
+                    <Link to='/flights' className='text-light nav-link'>
                         Flights
-                    </Nav.Link>
-                    <Nav.Link href='/hotels' className='text-light text-capitalize'>
+                    </Link>
+                    <Link to='/hotels' className='text-light text-capitalize nav-link'>
                         Hotels
-                    </Nav.Link>
-                    <Nav.Link href='/buses' className='text-light'>
+                    </Link>
+                    <Link to='/buses' className='text-light nav-link'>
                         Buses
-                    </Nav.Link>
-                    <Nav.Link href='/holidays' className='text-light'>
-                        Holidays
-                    </Nav.Link>
+                    </Link>
+                    <Link to='/holidays' className='text-light nav-link'>
+                        Buses
+                    </Link>
                 </Nav>
                 <Button variant='light'>
                     <Link to='/' className='text-decoration-none text-capitalize text-dark text-nowrap'>Sign in

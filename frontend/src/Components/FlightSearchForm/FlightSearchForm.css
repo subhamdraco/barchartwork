@@ -1,10 +1,11 @@
+.wrapper-form{
+  margin-top: 40px;
+}
+
 .flight-form{
-    position: absolute;
-    width: 75%;
+    width: 85%;
     background-color: var(--primary-color);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    margin-top: 1200px;
 
 }
 
@@ -67,9 +68,9 @@
   width: 800px;
   height: 30%;
   z-index: 2;
-  left: 10px;
+  left: 50px;
   position: absolute;
-  top: 280px; 
+  top: 128%; 
   background-color: rgb(255, 253, 253);
   color: gray;
   border-radius: 5px;
@@ -91,16 +92,18 @@
 
 
 @media screen and (max-width:992px){
-    .search-form {
-        position: relative;
-        width: 90%;
-        transform: translate(-55.9%, 0%);
-    }
+
+  
+  .flight-form{
+    padding: auto;
+  }
 
     .options{
-        width: 220px;
-        top: 84%;
-        padding-top: 9%;
+      position: absolute;
+      width: 250px;
+      padding-top: 9%;
+      top: 1200px;
+      left: 80px;
     }
 
 }

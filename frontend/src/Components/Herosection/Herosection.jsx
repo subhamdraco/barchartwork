@@ -6,7 +6,7 @@ import GreenBtn from '../GreenBtn/GreenBtn';
 export default function Herosection() {
   return (
     <div className='hero-section'>
-        <Carousel>
+        <Carousel className='car'>
             <Carousel.Item className='carousel-item1 vh-100'>
                 <Carousel.Caption className='h-100 d-flex flex-column align-items-center justify-content-top'>
                     <div className="row h-100">

@@ -7,6 +7,7 @@ import Hotels from './Pages/Hotels/Hotels'
 import Buses from './Pages/Buses/Buses';
 import NavBar from './Components/NavBar/NavBar';
 import Footer from './Components/Footer/Footer';
+import SearchResult from './Pages/SearchResult/SearchResult';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path='/buses' element={<Buses/>} />
             <Route path='/hotels' element={<Hotels/>} />
             <Route path='/holidays' element={<Holidays/>} />
+            <Route path='/search' element={<SearchResult/>}/>
           </Routes>
         <Footer/>
     </div>

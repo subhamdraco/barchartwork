@@ -31,7 +31,7 @@ export default function NavBar() {
                         Buses
                     </Link>
                     <Link to='/holidays' className='text-light nav-link'>
-                        Buses
+                        Holidays
                     </Link>
                 </Nav>
                 <Button variant='light'>

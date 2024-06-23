@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Row, Col ,Table, Tab } from 'react-bootstrap'
+import { Container, Row, Col ,Table } from 'react-bootstrap'
 
 export default function SearchResult() {
   return (

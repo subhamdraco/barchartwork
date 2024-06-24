@@ -13,9 +13,7 @@
 .carousel-item4{
     background-image: linear-gradient(to right, rgba(0,0,0,0.20), rgba(0,0,0,0.50)), url('../../Assets/Images/header-img4.jpg');
 }
-.carousel-inner{
-    border-radius: 0;
-}
+
 .carousel-item1,
 .carousel-item2,
 .carousel-item3,

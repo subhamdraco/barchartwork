@@ -17,6 +17,7 @@
     width: 1.5rem;
 }
 
+
 @media screen and (max-width:576px){
     .navbar{
         background-color: var(--secondary-bg-color);

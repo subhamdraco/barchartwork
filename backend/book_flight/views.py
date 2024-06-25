@@ -2,9 +2,10 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework import authentication, permissions
+from rest_framework import permissions
 from .serializers import FlightsSerializer, SeatSerializer
 from .models import Flights, Seat
+from rest_framework_simplejwt.tokens import RefreshToken
 
 class FlightUtilsGeneral(APIView):
 
@@ -70,9 +71,26 @@ class SeatGeneral(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         
-    
-    
-    
+class LogInView(APIView):
+     
+   permission_classes = (permissions.IsAuthenticated, )
+   def get(self, request):
+       content = {'message': 'Welcome to the JWT Authentication page using React Js and Django!'}
+       return Response(content)
+
+
+class LogoutView(APIView):
+     
+     permission_classes = (permissions.IsAuthenticated,)
+     def post(self, request):
+          
+          try:
+               refresh_token = request.data["refresh_token"]
+               token = RefreshToken(refresh_token)
+               token.blacklist()
+               return Response(status=status.HTTP_205_RESET_CONTENT)
+          except Exception as e:
+               return Response(status=status.HTTP_400_BAD_REQUEST)
 
    
 

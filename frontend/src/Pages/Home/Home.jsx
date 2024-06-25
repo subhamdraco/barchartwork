@@ -1,5 +1,6 @@
-import React from 'react'
+import React , {useEffect} from 'react'
 import './Home.css';
+import axios from "axios";
 import Herosection from '../../Components/Herosection/Herosection';
 import SearchFrom from '../../Components/SearchFrom/SearchFrom';
 import LastHolidaysSection from '../../Components/LastHolidaysSection/LastHolidaysSection';
@@ -10,6 +11,29 @@ import RecentHolidays from '../../Components/RecentHolidays/RecentHolidays';
 import NeedInspiration from '../../Components/NeedInspiration/NeedInspiration';
 
 export default function Home() {
+  useEffect(() => {
+    if(localStorage.getItem('access_token') === null){                   
+        window.location.href = '/'
+    }
+    else{
+     (async () => {
+       try {
+         const Authorization = localStorage.getItem('access_token')
+         console.log(Authorization)
+         const {data} = await axios.get(   
+                        'http://localhost:8000/login/' ,{
+                          withCredentials: true,
+                         headers: {
+                              Authorization : "Bearer " + Authorization,
+                            'Content-Type': 'application/json'
+                         }}
+                       );
+          console.log(data.message)
+      } catch (e) {
+        console.log(e)
+      }
+     })()};
+ }, []);
   return (
     <div className='home-page'>
         <Herosection/>

@@ -7,6 +7,8 @@ urlpatterns = [
     path('flights/' , FlightUtilsGeneral.as_view()),
     path('flights/<int:pk>/' , FlightUtilsDetails.as_view()),
     path('seats/', SeatGeneral.as_view()),
+    path('login/', LogInView.as_view(), name ='login'),
+    path('logout/',LogoutView.as_view(), name ='logout')
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

@@ -1,10 +1,12 @@
 import React , {useState} from 'react'
 import axios from "axios";
 import './Login.css'
+import { Alert } from 'react-bootstrap';
 
 export default function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [isLoginSuccess, setisLoginSuccess] = useState(true)
     // Create the submit method.
     const submit = async e => {
         e.preventDefault();
@@ -13,19 +15,28 @@ export default function Login() {
               password: password
               };
         // Create the POST requuest
-        const {data} = await axios.post('http://localhost:8000/token/',user ,{headers: {'Content-Type': 'application/json'}});
+        try {
+          const {data} = await axios.post('http://localhost:8000/token/',user ,{headers: {'Content-Type': 'application/json'}});
         
-        // Initialize the access & refresh token in localstorage.      
-        localStorage.clear();
-        localStorage.setItem('access_token', data.access);
-        localStorage.setItem('refresh_token', data.refresh);
-        axios.defaults.headers.common['Authorization'] = 
-                                        `Bearer ${data['access']}`;
-        window.location.href = '/home'
+          // Initialize the access & refresh token in localstorage.      
+          localStorage.clear();
+          localStorage.setItem('access_token', data.access);
+          localStorage.setItem('refresh_token', data.refresh);
+          axios.defaults.headers.common['Authorization'] = 
+                                          `Bearer ${data['access']}`;
+          window.location.href = '/home'
+        }
+        catch{
+          setisLoginSuccess(false)
+        }
+        
   }
   return (
     <div>
       <div className="wrapper">
+        {isLoginSuccess === false && <Alert key='warning' variant='warning' dismissible>
+          Incorrect Credentials. Please try again!
+        </Alert>}
       <h1>Book Your Travel Now!</h1>
         <div className="container main_">
           <div className="row" id='row'>
@@ -46,10 +57,10 @@ export default function Login() {
                         <label htmlFor="password" className='text-uppercase'>password</label>
                     </div>
                     <div className='input-field'>
-                        <input type='submit' className='submit_' value='Sign Up'/>
+                        <input type='submit' className='submit_' value='Log In'/>
                     </div>
                     <div className="SignIn">
-                      <span className='span'>Don't have an account?<a href="/"> Register Here</a></span>
+                      <span className='span'>Don't have an account?<a href="/register"> Register Here</a></span>
                     </div>
                   </form>
             </div>

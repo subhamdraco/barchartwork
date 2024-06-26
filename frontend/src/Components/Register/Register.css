@@ -1,0 +1,13 @@
+.row.head-row .col-lg-6{
+    padding-left: 10%;
+}
+
+.row.mt-5.mb-3.sub-row .col-lg-4{
+    padding-left: 4%;
+    height: 65px;
+}
+
+.place.h-100::placeholder {
+    font-size: large;
+    font-weight: 600;
+  }

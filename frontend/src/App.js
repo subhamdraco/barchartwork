@@ -9,15 +9,21 @@ import NavBar from './Components/NavBar/NavBar';
 import Footer from './Components/Footer/Footer';
 import SearchResult from './Pages/SearchResult/SearchResult';
 import Login from './Pages/Login/Login'
+import Register from './Components/Register/Register';
 
 function App() {
     const location = useLocation();
-    const showNavbar = location.pathname !== '/';
+    let showNavbar = true;
+    if (location.pathname !== '/' || location.pathname !== '/register'){
+      showNavbar = false;
+    }
+
   return (
     <div className="App">
       {showNavbar && <NavBar/>}
       <Routes>
           <Route path='/' element={<Login/>}/>
+          <Route path='/register' element={<Register/>}/>
           <Route path='/home' element={<Home/>} />
           <Route path='/flights' element={<Flights/>} />
           <Route path='/buses' element={<Buses/>} />

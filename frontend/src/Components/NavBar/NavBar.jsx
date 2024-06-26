@@ -9,10 +9,9 @@ export default function NavBar() {
 
     const Logout = async () => {
           try {
-            await axios.post('http://localhost:8000/logout/',{
-                  refresh_token:localStorage.getItem('refresh_token')
-                  } ,{headers: {'Content-Type': 'application/json'}},  
-                  {withCredentials: true});
+            const refresh_token = localStorage.getItem('refresh_token')
+            const auth_token = localStorage.getItem('access_token')
+            await axios.post('http://localhost:8000/logout/',{refresh_token: refresh_token} ,{headers: {Authorization: `Bearer ${auth_token}`}});
             localStorage.clear();
             axios.defaults.headers.common['Authorization'] = null;
             window.location.href = '/'

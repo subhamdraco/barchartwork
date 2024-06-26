@@ -30,7 +30,7 @@ export default function Home() {
                        );
           console.log(data.message)
       } catch (e) {
-        console.log(e)
+        window.location.href = '/'
       }
      })()};
  }, []);

@@ -12,15 +12,20 @@ import Login from './Pages/Login/Login'
 import Register from './Components/Register/Register';
 
 function App() {
-    const location = useLocation();
-    let showNavbar = true;
-    if (location.pathname !== '/' || location.pathname !== '/register'){
-      showNavbar = false;
+    function Shownnav(){
+      const location = useLocation();
+      if (location.pathname === '/' || location.pathname === '/register'){
+        return false
+      }
+      else{
+        return true
+      }
     }
+    
 
   return (
     <div className="App">
-      {showNavbar && <NavBar/>}
+      {Shownnav() && <NavBar/>}
       <Routes>
           <Route path='/' element={<Login/>}/>
           <Route path='/register' element={<Register/>}/>
@@ -31,7 +36,7 @@ function App() {
           <Route path='/holidays' element={<Holidays/>} />
           <Route path='/search' element={<SearchResult/>}/>
       </Routes>
-      {showNavbar && <Footer/>}
+      {Shownnav() && <Footer/>}
     </div>
   );
 }

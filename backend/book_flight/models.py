@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Flights(models.Model):
     flight_no = models.CharField(max_length=30)
@@ -34,17 +35,21 @@ class Airport(models.Model):
     location = models.CharField(max_length=30)
 
 class User_Details(models.Model):
-    user_name = models.IntegerField(null=False)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
+    mobile = models.CharField(max_length=20, primary_key=True, default=1)
     email = models.IntegerField()
     whatsapp = models.IntegerField()
-    password = models.TextField()
-
+    ag_name = models.TextField(default=' ')
+    ag_add = models.TextField(default=' ')
+    ag_country = models.CharField(max_length=40, default=' ')
+    ag_state = models.CharField(max_length=40, default=' ')
+    ag_city = models.CharField(max_length=30 , default='')
+    ag_pincode = models.CharField(max_length=20, default=' ')
 
 class BookingDetails(models.Model):
     flight = models.ManyToManyField(Flights)
-    user = models.ForeignKey(User_Details, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete= models.CASCADE)
     start = models.CharField(max_length=30)
     destination = models.CharField(max_length=30)
     date = models.DateTimeField()

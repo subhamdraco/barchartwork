@@ -57,10 +57,10 @@ export default function Login() {
                         <label htmlFor="password" className='text-uppercase'>password</label>
                     </div>
                     <div className='input-field'>
-                        <input type='submit' className='submit_' value='Sign Up'/>
+                        <input type='submit' className='submit_' value='Log In'/>
                     </div>
                     <div className="SignIn">
-                      <span className='span'>Don't have an account?<a href="/"> Register Here</a></span>
+                      <span className='span'>Don't have an account?<a href="/register"> Register Here</a></span>
                     </div>
                   </form>
             </div>

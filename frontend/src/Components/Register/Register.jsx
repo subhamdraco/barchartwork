@@ -49,19 +49,22 @@ export default function Register() {
             ...formData,
             username: formData.mobile
         }
-        if (finaldata.password !== finaldata.confirm_password){e.stopPropagation(); alert('Passwords Do Not Match! '); return}
-        setValidated(true);
-        try{
-            const {data} = await axios.post('http://localhost:8000/register/',  finaldata , {'Content-Type': 'application/json'})
-            if (form.checkValidity() === true) {alert(data.message); window.location.href = '/'}
-            else{alert('Errors in Form Submit !')}
-            
-           
-        }
-        catch(e){
-            console.log(e)
-        }
-    }
+        if (finaldata.password !== finaldata.confirm_password)
+            {e.stopPropagation(); alert('Passwords Do Not Match! ');}
+        else if (finaldata.password.length < 8) 
+            {e.stopPropagation(); alert('Password length should be min 8 characters!');}
+        else{
+            setValidated(true);
+            try{
+                const {data} = await axios.post('http://localhost:8000/register/',  finaldata , {'Content-Type': 'application/json'})
+                if (form.checkValidity() === true) {alert(data.message); window.location.href = '/'}
+                else{alert('Errors in Form Submit !')}
+            }
+            catch(e){
+                if (e.response.status === 409){alert(e.response.data);}
+            }}
+        
+    };
 
   return (
     <div>

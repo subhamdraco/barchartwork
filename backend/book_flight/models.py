@@ -37,8 +37,8 @@ class Airport(models.Model):
 class User_Details(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    mobile = models.CharField(max_length=20, primary_key=True, default=1)
-    email = models.IntegerField()
+    mobile = models.CharField(max_length=20, primary_key=True, default=1) # username in auth
+    email = models.EmailField()
     whatsapp = models.IntegerField()
     ag_name = models.TextField(default=' ')
     ag_add = models.TextField(default=' ')

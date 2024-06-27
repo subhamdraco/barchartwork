@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
 from .serializers import FlightsSerializer, SeatSerializer
-from .models import Flights, Seat
+from .models import Flights, Seat , User, User_Details
 from rest_framework_simplejwt.tokens import RefreshToken
 
 class FlightUtilsGeneral(APIView):
@@ -100,9 +100,26 @@ class RegisterView(APIView):
         try:
             user_data = request.data
             print(user_data)
-            return Response(status=status.HTTP_201_CREATED, data={'message':'Registration Successfull! Go to Login Page to login !'})
+            try:
+                if User.objects.get(username=user_data['username']):
+                    return Response(status=status.HTTP_409_CONFLICT , data=f'Username {user_data['username']} already exists! ')
+                user = User.objects.create_user( first_name=user_data['first_name'], 
+                                                last_name=user_data['first_name'], 
+                                                username=user_data['username'])
+                user.set_password(user_data['password'])
+                user.save()
+                to_be_removed = ['username' , 'password' , 'confirm_password']
+                for key in to_be_removed:
+                    if key in user_data:
+                        del user_data[key]
+                user_details = User_Details.objects.create(**user_data)
+                user_details.save()
+                return Response(status=status.HTTP_201_CREATED, data={'message':'Registration Successfull! Go to Login Page to login !'})
+            except Exception as e:
+                print(str(e))
+                return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data=str(e))
         except Exception as e:
-            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data=str(e))
 
    
 

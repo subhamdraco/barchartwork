@@ -27,43 +27,93 @@ export default function Register() {
         password: '',
         confirm_password: '',
     })
+    const [errors, seterrors] = useState({})
+
+    const uppercaseRegExp   = /(?=.*?[A-Z])/;
+    const lowercaseRegExp   = /(?=.*?[a-z])/;
+    const digitsRegExp      = /(?=.*?[0-9])/;
+    const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/;
 
     const onInputChange = (e) => {
         const {name, value} = e.target;
-        setformData((prev) => { 
-            return {
-            ...prev,
+        setformData({
+            ...formData,
             [name] : value
-        };
-    });
+        })
+
+        if (!!errors.name){
+            seterrors({
+                [name] : null
+            })
+        }
+
         if (name==='mobile'){setuserplaceholder(e.target.value)};
     };
 
+    const validateForm = () => {
+
+        const  {first_name,
+        last_name,
+        mobile,
+        email,
+        whatsapp,
+        ag_nam,
+        ag_ad,
+        ag_country,
+        ag_state,
+        ag_city,
+        ag_pincode,
+        usernam,
+        password,
+        confirm_password} = formData
+
+        const newErrors = {}
+        if (!first_name || first_name === '') newErrors.first_name = 'Please provide a valid First Name'
+
+        return newErrors
+
+    }
+    
+
     const formsubmit = async  (e) =>{
         e.preventDefault();
-        const form = e.currentTarget;
-        if (form.checkValidity() === false) {
-          e.stopPropagation();
-        }
         const finaldata = {
             ...formData,
             username: formData.mobile
         }
-        if (finaldata.password !== finaldata.confirm_password)
-            {e.stopPropagation(); alert('Passwords Do Not Match! ');}
-        else if (finaldata.password.length < 8) 
-            {e.stopPropagation(); alert('Password length should be min 8 characters!');}
+
+        const formErrors = validateForm()
+        if (Object.keys(formErrors).length > 0){seterrors(formErrors); return}
         else{
-            setValidated(true);
-            try{
-                const {data} = await axios.post('http://localhost:8000/register/',  finaldata , {'Content-Type': 'application/json'})
-                if (form.checkValidity() === true) {alert(data.message); window.location.href = '/'}
-                else{alert('Errors in Form Submit !')}
-            }
-            catch(e){
-                if (e.response.status === 409){alert(e.response.data);}
-            }}
-        
+            console.log(finaldata);
+        }
+
+        console.log(finaldata);
+        // e.preventDefault();
+        // const form = e.currentTarget;
+        // if (form.checkValidity() === false) {
+        //     e.preventDefault();
+        //     e.stopPropagation();
+        // }
+        // setValidated(true)
+        // else{
+        //     setValidated(true)
+        //     const finaldata = {
+        //     ...formData,
+        //     username: formData.mobile
+        // }
+        // if (finaldata.password !== finaldata.confirm_password)
+        //     {e.stopPropagation(); alert('Passwords Do Not Match! ');}
+        // else{
+        //     try{
+        //         const {data} = await axios.post('http://localhost:8000/register/',  finaldata , {'Content-Type': 'application/json'})
+        //         if (form.checkValidity() === true) {alert(data.message); window.location.href = '/'}
+        //         else{alert('Errors in Form Submit !')}
+        //     }
+        //     catch(e){
+        //         if (e.response.status === 409){alert(e.response.data);}
+        //     }}
+        // }
     };
 
   return (
@@ -90,15 +140,15 @@ export default function Register() {
             <div className="row head-row">
                 <div className="col-lg-6">
                     <Form.Group className="mb-3 mt-3 w-75 h-100 shadow" controlId="first_name">
-                        <Form.Control className='place h-100' type="text" name="first_name" onChange={onInputChange} placeholder="First Name * " required/>
+                        <Form.Control className='place h-100' type="text" name="first_name" onChange={onInputChange} placeholder="First Name * " required isInvalid={!!errors.first_name}/>
                         <Form.Control.Feedback type="invalid">
-                             Please provide a valid First Name.
+                            {errors.first_name}
                         </Form.Control.Feedback> 
                     </Form.Group>
                 </div>
                 <div className="col-lg-6">
                     <Form.Group className="mb-3 mt-3 w-75 h-100 shadow" controlId="last_name">
-                        <Form.Control className='place h-100' type="text" name="last_name" onChange={onInputChange} placeholder="Last Name *  " required/>
+                        <Form.Control className='place h-100' type="text" name="last_name" onChange={onInputChange} placeholder="Last Name *  " required isInvalid={!!errors.last_name}/>
                         <Form.Control.Feedback type="invalid">
                              Please provide a valid Last Name.
                         </Form.Control.Feedback> 
@@ -108,7 +158,8 @@ export default function Register() {
             <div className="row mt-5 mb-3 sub-row">
                 <div className="col-lg-4">
                     <Form.Group className="mb-3 w-75 h-100 shadow" controlId="mobile">
-                        <Form.Control className='place h-100' type="tel" name='mobile' onChange={onInputChange} pattern='[1-9]{1}[0-9]{9}' placeholder="Mobile *" required/>
+                        <Form.Control className='place h-100' type="tel" name='mobile' onChange={onInputChange} pattern='[1-9]{1}[0-9]{9}' placeholder="Mobile *" required
+                        isInvalid={errors.mobile}/>
                         <Form.Control.Feedback type="invalid">
                              Please provide a valid Mobile Number.
                         </Form.Control.Feedback> 
@@ -116,7 +167,7 @@ export default function Register() {
                 </div>
                 <div className="col-lg-4">
                     <Form.Group className="mb-3 w-75 h-100 shadow" controlId="email">
-                        <Form.Control className='place h-100' name='email' onChange={onInputChange} type='email' placeholder="Email *" required/>
+                        <Form.Control className='place h-100' isInvalid={!!errors.email} name='email' onChange={onInputChange} type='email' placeholder="Email *" required/>
                         <Form.Control.Feedback type="invalid">
                              Please provide a valid Email.
                         </Form.Control.Feedback> 
@@ -124,7 +175,7 @@ export default function Register() {
                 </div>
                 <div className="col-lg-4">
                     <Form.Group className="mb-3 w-75 h-100 shadow" controlId="whats_app">
-                        <Form.Control className='place h-100' onChange={onInputChange} type='tel' name='whatsapp' pattern='[1-9]{1}[0-9]{9}' placeholder="WhatsApp *" required/>
+                        <Form.Control className='place h-100' isInvalid={!!errors.whats_app} onChange={onInputChange} type='tel' name='whatsapp' pattern='[1-9]{1}[0-9]{9}' placeholder="WhatsApp *" required/>
                         <Form.Control.Feedback type="invalid">
                              Please provide a valid Mobile Number.
                         </Form.Control.Feedback> 
@@ -139,34 +190,34 @@ export default function Register() {
             <div className="row head-row">
                 <div className="col-lg-6">
                     <Form.Group className="mb-3 mt-3 w-75 h-100 shadow" controlId="agency_name">
-                        <Form.Control className='place h-100' name="ag_name" onChange={onInputChange}  type="text" placeholder="Agency Name" />
+                        <Form.Control className='place h-100' isInvalid={!!errors.ag_name}  name="ag_name" onChange={onInputChange}  type="text" placeholder="Agency Name" />
                     </Form.Group>
                 </div>
                 <div className="col-lg-6">
                     <Form.Group className="mb-3 mt-3 w-75 h-100 shadow" controlId="agency_address">
-                        <Form.Control className='place h-100' name="ag_add" onChange={onInputChange}  type="text" placeholder="Agency Address" />
+                        <Form.Control className='place h-100' isInvalid={!!errors.ag_add} name="ag_add" onChange={onInputChange}  type="text" placeholder="Agency Address" />
                     </Form.Group>
                 </div>
             </div>
             <div className="row mt-5 mb-3 sub-row">
                 <div className="col-lg-3">
                     <Form.Group className="mb-3 w-75 h-100 shadow" controlId="country">
-                        <Form.Control className='place h-100' name="ag_country" onChange={onInputChange} type="text" placeholder="Country"/>
+                        <Form.Control className='place h-100' isInvalid={!!errors.ag_country} name="ag_country" onChange={onInputChange} type="text" placeholder="Country"/>
                     </Form.Group>
                 </div>
                 <div className="col-lg-3">
                     <Form.Group className="mb-3 w-75 h-100 shadow" controlId="state">
-                        <Form.Control className='place h-100' name="ag_state" onChange={onInputChange} type="text" placeholder="State"/>
+                        <Form.Control className='place h-100' isInvalid={!!errors.ag_state} name="ag_state" onChange={onInputChange} type="text" placeholder="State"/>
                     </Form.Group>
                 </div>
                 <div className="col-lg-3">
                     <Form.Group className="mb-3 w-75 h-100 shadow" controlId="city">
-                        <Form.Control className='place h-100' name="ag_city" onChange={onInputChange} type="text" placeholder="City"/>
+                        <Form.Control className='place h-100' isInvalid={!!errors.ag_city} name="ag_city" onChange={onInputChange} type="text" placeholder="City"/>
                     </Form.Group>
                 </div>
                 <div className="col-lg-3">
                     <Form.Group className="mb-3 w-75 h-100 shadow" controlId="pin">
-                        <Form.Control className='place h-100' name="ag_pincode" onChange={onInputChange} type="number" placeholder="Pincode"/>
+                        <Form.Control className='place h-100' isInvalid={!!errors.ag_city} name="ag_pincode" onChange={onInputChange} type="number" placeholder="Pincode"/>
                     </Form.Group>
                 </div>
             </div>
@@ -181,17 +232,27 @@ export default function Register() {
                 </div>
                 <div className="col-lg-3 mb-3">
                     <Form.Group className="mb-3 w-75 h-100 shadow mb-4" controlId="password">
-                        <Form.Control className='place h-100' name="password" onChange={onInputChange} type="password" placeholder="Password *"  autoComplete="off" required/>
+                        <Form.Control className='place h-100' 
+                        isInvalid={!!errors.password}
+                        name="password" 
+                        onChange={onInputChange} 
+                        type="password" 
+                        placeholder="Password *"  
+                        required
+                        />
                         <Form.Control.Feedback type="invalid">
-                             Please provide a valid Password. Minimum 8 alphanumeric. 
+                            Error: Password should have at least one uppercase character , at least one lowercase character 
+                            , at least one digit/number , at least one special character, minimum 8 characters
                         </Form.Control.Feedback>
                     </Form.Group>
                 </div>
                 <div className="col-lg-3 mb-3">
                     <Form.Group className="mb-3 w-75 h-100 shadow mb-4" controlId="current_password">
-                        <Form.Control className='place h-100' name="confirm_password" onChange={onInputChange} type="password" placeholder="Current Password *" autoComplete="off" required/>
+                        <Form.Control className='place h-100'  name="confirm_password" isInvalid={!!errors.confirm_password}
+                        
+                            onChange={onInputChange} type="password" placeholder="Current Password *" autoComplete="off" required/>
                         <Form.Control.Feedback type="invalid">
-                            Error Password Do Not Match.
+                            Passwords Do not Match
                         </Form.Control.Feedback>
                     </Form.Group>
                 </div>

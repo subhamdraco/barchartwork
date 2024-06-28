@@ -101,8 +101,12 @@ class RegisterView(APIView):
             user_data = request.data
             print(user_data)
             try:
-                if User.objects.get(username=user_data['username']):
-                    return Response(status=status.HTTP_409_CONFLICT , data=f'Username {user_data['username']} already exists! ')
+                try:
+                    getUser = User.objects.get(username=user_data['username'])
+                except:
+                    getUser = False
+                if getUser:
+                    return Response(status=status.HTTP_409_CONFLICT , data=f'Username {user_data["username"]} already exists! ')
                 user = User.objects.create_user( first_name=user_data['first_name'], 
                                                 last_name=user_data['first_name'], 
                                                 username=user_data['username'])
@@ -112,8 +116,8 @@ class RegisterView(APIView):
                 for key in to_be_removed:
                     if key in user_data:
                         del user_data[key]
-                user_details = User_Details.objects.create(**user_data)
-                user_details.save()
+                # user_details = User_Details.objects.create(**user_data)
+                # user_details.save()
                 return Response(status=status.HTTP_201_CREATED, data={'message':'Registration Successfull! Go to Login Page to login !'})
             except Exception as e:
                 print(str(e))

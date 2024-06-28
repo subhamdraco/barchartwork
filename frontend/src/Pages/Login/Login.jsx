@@ -4,6 +4,7 @@ import './Login.css'
 import { Alert } from 'react-bootstrap';
 
 export default function Login() {
+    const [errorMessage, seterrorMessage] = useState('Incorrect Credentials. Please try again!')
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [isLoginSuccess, setisLoginSuccess] = useState(true)
@@ -17,7 +18,6 @@ export default function Login() {
         // Create the POST requuest
         try {
           const {data} = await axios.post('http://localhost:8000/token/',user ,{headers: {'Content-Type': 'application/json'}});
-        
           // Initialize the access & refresh token in localstorage.      
           localStorage.clear();
           localStorage.setItem('access_token', data.access);
@@ -26,16 +26,21 @@ export default function Login() {
                                           `Bearer ${data['access']}`;
           window.location.href = '/home'
         }
-        catch{
+        catch(e){
           setisLoginSuccess(false)
+          if (e.request) {
+            // Request was made but no response was received
+            seterrorMessage('Network Error: No response from server.');
+          }
+          
         }
         
   }
   return (
     <div>
       <div className="wrapper">
-        {isLoginSuccess === false && <Alert key='warning' variant='warning' dismissible>
-          Incorrect Credentials. Please try again!
+        {isLoginSuccess === false && <Alert key='danger' variant='danger' dismissible>
+          {errorMessage}
         </Alert>}
       <h1>Book Your Travel Now!</h1>
         <div className="container main_">

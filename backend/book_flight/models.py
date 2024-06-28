@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class Flights(models.Model):
     flight_no = models.CharField(max_length=30)
     airline = models.CharField(max_length=30)
@@ -37,7 +38,7 @@ class Airport(models.Model):
 class User_Details(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    mobile = models.CharField(max_length=20, primary_key=True, default=1) # username in auth
+    mobile = models.ForeignKey(User, on_delete=models.CASCADE , to_field='username') # username in auth
     email = models.EmailField()
     whatsapp = models.IntegerField()
     ag_name = models.TextField(default=' ')
@@ -55,6 +56,5 @@ class BookingDetails(models.Model):
     date = models.DateTimeField()
     pnr = models.TextField()
     trip_type = models.CharField(max_length=10)
-
 
 

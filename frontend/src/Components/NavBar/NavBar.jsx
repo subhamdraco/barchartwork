@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './NavBar.css';
-import { Navbar, Nav, Container, Button } from 'react-bootstrap';
+import { Navbar, Nav, Container, Button, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import AirplaneLogo from '../../Assets/Icons/airplane.svg'
 import axios from 'axios';
 
 export default function NavBar() {
-
+    const [logoutSuccess, setlogoutSuccess] = useState(true)
+    const [errorMessage, seterrorMessage] = useState('')
     const Logout = async () => {
           try {
             const refresh_token = localStorage.getItem('refresh_token')
@@ -16,7 +17,15 @@ export default function NavBar() {
             axios.defaults.headers.common['Authorization'] = null;
             window.location.href = '/'
             } catch (e) {
-              console.log('logout not working', e)
+                setlogoutSuccess(false);
+                if (e.request) {
+                    // Request was made but no response was received
+                    seterrorMessage('Network Error: No response from server.');
+                  }
+                else {
+                    // Something else happened in setting up the request
+                    seterrorMessage(`Error: ${e.message}`);
+                  }
             }
           ;
      }
@@ -25,6 +34,9 @@ export default function NavBar() {
     <div>
       <Navbar expand="lg" className='postion-absolute w-100 z-2'>
         <Container>
+            {logoutSuccess === false && <Alert key='danger' variant='danger' dismissible>
+            {errorMessage}
+            </Alert>}
             <Navbar.Brand className='text-light'>
                 <Link to='/' className='text-decoration-none text-light d-flex'>
                     <img className="me-2" alt="logo"  src={AirplaneLogo}/>

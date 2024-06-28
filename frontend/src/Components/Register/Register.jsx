@@ -4,45 +4,51 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { MdTravelExplore } from "react-icons/md";
-import { Button , Form } from 'react-bootstrap';
+import { Button , Form, Alert } from 'react-bootstrap';
 import axios from "axios";
 
 export default function Register() {
 
+    const [registerSuccess, setregisterSuccess] = useState(true)
+    const [errorMessage, seterrorMessage] = useState('Error')
+    const [showPassword, setShowPassword] = useState(false);
     const [userplaceholder, setuserplaceholder] = useState('Username')
-    const [validated, setValidated] = useState(false);
     const [formData , setformData] = useState({
-        first_name:'',
+        first_name: '',
         last_name: '',
         mobile: '',
         email: '',
         whatsapp: '',
         ag_name:'',
         ag_add:'',
-        ag_country: '',
-        ag_state: '',
-        ag_city: '',
-        ag_pincode: '',
-        username:'',
-        password: '',
-        confirm_password: '',
-    })
+        ag_country:'',
+        ag_state:'',
+        ag_city:'',
+        ag_pincode:'',
+        password:'',
+        confirm_password: ''})
     const [errors, seterrors] = useState({})
+
+    const isNumber = str => {
+        const num = Number(str);
+        return !Number.isNaN(num);
+      };
 
     const uppercaseRegExp   = /(?=.*?[A-Z])/;
     const lowercaseRegExp   = /(?=.*?[a-z])/;
     const digitsRegExp      = /(?=.*?[0-9])/;
     const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/;
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
     const onInputChange = (e) => {
         const {name, value} = e.target;
         setformData({
             ...formData,
-            [name] : value
+            [name] : value 
         })
-
         if (!!errors.name){
             seterrors({
+                ...errors,
                 [name] : null
             })
         }
@@ -57,19 +63,16 @@ export default function Register() {
         mobile,
         email,
         whatsapp,
-        ag_nam,
-        ag_ad,
-        ag_country,
-        ag_state,
-        ag_city,
-        ag_pincode,
-        usernam,
         password,
         confirm_password} = formData
-
         const newErrors = {}
-        if (!first_name || first_name === '') newErrors.first_name = 'Please provide a valid First Name'
-
+        if (first_name.trim() === '') newErrors['first_name'] = 'Please provide a valid First Name'
+        if (last_name.trim() === '') newErrors['last_name'] = 'Please provide a valid Last Name'
+        if (mobile.trim() === '' || !isNumber(mobile) || mobile.length !== 10) newErrors['mobile'] = 'Please provide a valid mobile number'
+        if (email.trim() === '' || !emailPattern.test(email)) newErrors['email'] = 'Please provide a valid email address'
+        if (whatsapp.trim() === '' || !isNumber(whatsapp) || whatsapp.length !== 10) newErrors['whatsapp'] = 'Please provide a valid mobile number'
+        if (password.trim() === '' || !uppercaseRegExp.test(password) || !lowercaseRegExp.test(password) || !digitsRegExp.test(password) || !specialCharRegExp.test(password)) newErrors['password'] = 'Error: Password should have at least one uppercase character , at least one lowercase character , at least one digit/number , at least one special character, minimum 8 characters'
+        if (confirm_password !== password) newErrors['confirm_password'] = 'Passwords Do Not Match!'
         return newErrors
 
     }
@@ -83,37 +86,28 @@ export default function Register() {
         }
 
         const formErrors = validateForm()
-        if (Object.keys(formErrors).length > 0){seterrors(formErrors); return}
+        if (Object.keys(formErrors).length > 0){seterrors(formErrors);}
         else{
-            console.log(finaldata);
+            try{
+                const {data} = await axios.post('http://localhost:8000/register/',  finaldata , {'Content-Type': 'application/json'})
+                window.location.href = '/'
+                alert(data.message)
+            }
+            catch(e){
+                setregisterSuccess(false)
+                if (e.response) {
+                    // Server responded with a status other than 200 range
+                    seterrorMessage(`Server Error: ${e.response.status} - ${e.response.data}`);
+                  } else if (e.request) {
+                    // Request was made but no response was received
+                    seterrorMessage('Network Error: No response from server.');
+                  } else {
+                    // Something else happened in setting up the request
+                    seterrorMessage(`Error: ${e.message}`);
+                  }
+            }
+            
         }
-
-        console.log(finaldata);
-        // e.preventDefault();
-        // const form = e.currentTarget;
-        // if (form.checkValidity() === false) {
-        //     e.preventDefault();
-        //     e.stopPropagation();
-        // }
-        // setValidated(true)
-        // else{
-        //     setValidated(true)
-        //     const finaldata = {
-        //     ...formData,
-        //     username: formData.mobile
-        // }
-        // if (finaldata.password !== finaldata.confirm_password)
-        //     {e.stopPropagation(); alert('Passwords Do Not Match! ');}
-        // else{
-        //     try{
-        //         const {data} = await axios.post('http://localhost:8000/register/',  finaldata , {'Content-Type': 'application/json'})
-        //         if (form.checkValidity() === true) {alert(data.message); window.location.href = '/'}
-        //         else{alert('Errors in Form Submit !')}
-        //     }
-        //     catch(e){
-        //         if (e.response.status === 409){alert(e.response.data);}
-        //     }}
-        // }
     };
 
   return (
@@ -129,9 +123,12 @@ export default function Register() {
                 </Navbar.Collapse>
             </Container>
         </Navbar>
+        {registerSuccess === false && <Alert key='danger' variant='danger' dismissible>
+          {errorMessage}
+        </Alert>}
         <Container>
             <h1 className='mt-4'>Get Started - Register</h1>
-            <Form noValidate onSubmit={formsubmit} validated={validated}>
+            <Form noValidate onSubmit={formsubmit} >
             <div className="row mt-5">
                 <div className="col-lg-12 col-md-12 col-sm-12">
                     <h3><span className='shadow rounded'>Personal Details</span></h3>
@@ -150,7 +147,7 @@ export default function Register() {
                     <Form.Group className="mb-3 mt-3 w-75 h-100 shadow" controlId="last_name">
                         <Form.Control className='place h-100' type="text" name="last_name" onChange={onInputChange} placeholder="Last Name *  " required isInvalid={!!errors.last_name}/>
                         <Form.Control.Feedback type="invalid">
-                             Please provide a valid Last Name.
+                            {errors.last_name}
                         </Form.Control.Feedback> 
                     </Form.Group>
                 </div>
@@ -158,10 +155,10 @@ export default function Register() {
             <div className="row mt-5 mb-3 sub-row">
                 <div className="col-lg-4">
                     <Form.Group className="mb-3 w-75 h-100 shadow" controlId="mobile">
-                        <Form.Control className='place h-100' type="tel" name='mobile' onChange={onInputChange} pattern='[1-9]{1}[0-9]{9}' placeholder="Mobile *" required
-                        isInvalid={errors.mobile}/>
+                        <Form.Control className='place h-100' type="tel" name='mobile' onChange={onInputChange} placeholder="Mobile *" required
+                        isInvalid={!!errors.mobile}/>
                         <Form.Control.Feedback type="invalid">
-                             Please provide a valid Mobile Number.
+                                {errors.mobile}
                         </Form.Control.Feedback> 
                     </Form.Group>
                 </div>
@@ -169,15 +166,15 @@ export default function Register() {
                     <Form.Group className="mb-3 w-75 h-100 shadow" controlId="email">
                         <Form.Control className='place h-100' isInvalid={!!errors.email} name='email' onChange={onInputChange} type='email' placeholder="Email *" required/>
                         <Form.Control.Feedback type="invalid">
-                             Please provide a valid Email.
+                            {errors.email}
                         </Form.Control.Feedback> 
                     </Form.Group>
                 </div>
                 <div className="col-lg-4">
                     <Form.Group className="mb-3 w-75 h-100 shadow" controlId="whats_app">
-                        <Form.Control className='place h-100' isInvalid={!!errors.whats_app} onChange={onInputChange} type='tel' name='whatsapp' pattern='[1-9]{1}[0-9]{9}' placeholder="WhatsApp *" required/>
+                        <Form.Control className='place h-100' isInvalid={!!errors.whatsapp} onChange={onInputChange} type='tel' name='whatsapp' pattern='[1-9]{1}[0-9]{9}' placeholder="WhatsApp *" required/>
                         <Form.Control.Feedback type="invalid">
-                             Please provide a valid Mobile Number.
+                            {errors.whatsapp}
                         </Form.Control.Feedback> 
                     </Form.Group>
                 </div>
@@ -226,19 +223,31 @@ export default function Register() {
                     <h3><span className='shadow rounded'>Authentication Information</span></h3>
                 </div>
                 <div className="col-lg-3 mb-3">
-                    <Form.Group className="mb-3 w-75 h-100 shadow mb-4" controlId="username">
+                    <Form.Group className="mb-3 w-75 h-75 shadow mb-4" controlId="username">
                         <Form.Control className='place h-100' type="text" name="username" placeholder={userplaceholder} value={formData.mobile} onChange={onInputChange} disabled/>
                     </Form.Group>
                 </div>
                 <div className="col-lg-3 mb-3">
-                    <Form.Group className="mb-3 w-75 h-100 shadow mb-4" controlId="password">
+                    <Form.Group className="mb-3 w-75 h-75 shadow mb-4" controlId="password">
                         <Form.Control className='place h-100' 
                         isInvalid={!!errors.password}
                         name="password" 
                         onChange={onInputChange} 
-                        type="password" 
+                        type={
+                            showPassword ? "text" : "password"
+                        } 
                         placeholder="Password *"  
+                        autoComplete="off"
                         required
+                        />
+                        <Form.Check
+                            type="switch"
+                            id="custom-switch"
+                            label="Show Password"
+                            value={showPassword}
+                            onChange={() =>
+                                setShowPassword((prev) => !prev)
+                            }
                         />
                         <Form.Control.Feedback type="invalid">
                             Error: Password should have at least one uppercase character , at least one lowercase character 
@@ -247,9 +256,8 @@ export default function Register() {
                     </Form.Group>
                 </div>
                 <div className="col-lg-3 mb-3">
-                    <Form.Group className="mb-3 w-75 h-100 shadow mb-4" controlId="current_password">
+                    <Form.Group className="mb-3 w-75 h-75 shadow mb-4" controlId="current_password">
                         <Form.Control className='place h-100'  name="confirm_password" isInvalid={!!errors.confirm_password}
-                        
                             onChange={onInputChange} type="password" placeholder="Current Password *" autoComplete="off" required/>
                         <Form.Control.Feedback type="invalid">
                             Passwords Do not Match
@@ -257,7 +265,7 @@ export default function Register() {
                     </Form.Group>
                 </div>
                 <div className="col-lg-3 mb-3">
-                    <Button className='mb-3 w-75 h-100 shadow mb-4' variant='success' type='submit' size="lg">Register</Button>
+                    <Button className='mb-3 w-75 h-75 shadow mb-4' variant='success' type='submit' size="lg">Register</Button>
                 </div>
             </div>
             </Form>

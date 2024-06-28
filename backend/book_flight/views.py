@@ -92,6 +92,7 @@ class LogoutView(APIView):
           except Exception as e:
                return Response(status=status.HTTP_400_BAD_REQUEST)
 
+
 class RegisterView(APIView):
     permission_classes = (permissions.AllowAny,)
 
@@ -112,12 +113,13 @@ class RegisterView(APIView):
                                                 username=user_data['username'])
                 user.set_password(user_data['password'])
                 user.save()
+                user_data['mobile'] = User.objects.get(username=user_data['username'])
                 to_be_removed = ['username' , 'password' , 'confirm_password']
                 for key in to_be_removed:
                     if key in user_data:
                         del user_data[key]
-                # user_details = User_Details.objects.create(**user_data)
-                # user_details.save()
+                user_details = User_Details.objects.create(**user_data)
+                user_details.save()
                 return Response(status=status.HTTP_201_CREATED, data={'message':'Registration Successfull! Go to Login Page to login !'})
             except Exception as e:
                 print(str(e))

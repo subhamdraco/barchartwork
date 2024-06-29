@@ -6,6 +6,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { MdTravelExplore } from "react-icons/md";
 import { Button , Form, Alert } from 'react-bootstrap';
 import axios from "axios";
+import host from '../../Assets/Host';
 
 export default function Register() {
 
@@ -89,7 +90,7 @@ export default function Register() {
         if (Object.keys(formErrors).length > 0){seterrors(formErrors);}
         else{
             try{
-                const {data} = await axios.post('http://localhost:8000/register/',  finaldata , {'Content-Type': 'application/json'})
+                const {data} = await axios.post(`${host}/register/`,  finaldata , {'Content-Type': 'application/json'})
                 window.location.href = '/'
                 alert(data.message)
             }

@@ -9,6 +9,7 @@ import BusLogo from '../../Assets/Icons/Bus.png';
 import HolidayLogo from '../../Assets/Icons/Holiday.png';
 import MapLogo from '../../Assets/Icons/map.png';
 import axios from 'axios';
+import host from '../../Assets/Host';
 
 export default function NavBar() {
     const [logoutSuccess, setlogoutSuccess] = useState(true)
@@ -18,7 +19,7 @@ export default function NavBar() {
           try {
             const refresh_token = localStorage.getItem('refresh_token')
             const auth_token = localStorage.getItem('access_token')
-            await axios.post('http://localhost:8000/logout/',{refresh_token: refresh_token} ,{headers: {Authorization: `Bearer ${auth_token}`}});
+            await axios.post(`${host}/logout/`,{refresh_token: refresh_token} ,{headers: {Authorization: `Bearer ${auth_token}`}});
             localStorage.clear();
             axios.defaults.headers.common['Authorization'] = null;
             window.location.href = '/'

@@ -2,6 +2,7 @@ import React , {useState} from 'react'
 import axios from "axios";
 import './Login.css'
 import { Alert } from 'react-bootstrap';
+import host from '../../Assets/Host';
 
 export default function Login() {
     const [errorMessage, seterrorMessage] = useState('Incorrect Credentials. Please try again!')
@@ -17,7 +18,7 @@ export default function Login() {
               };
         // Create the POST requuest
         try {
-          const {data} = await axios.post('http://localhost:8000/token/',user ,{headers: {'Content-Type': 'application/json'}});
+          const {data} = await axios.post(`${host}/token/`,user ,{headers: {'Content-Type': 'application/json'}});
           // Initialize the access & refresh token in localstorage.      
           localStorage.clear();
           localStorage.setItem('user' , username)

@@ -9,6 +9,7 @@ import HolidayPlanSection from '../../Components/HolidayPlanSection/HolidayPlanS
 import FavouritesSection from '../../Components/FavouritesSection/FavouritesSection';
 import RecentHolidays from '../../Components/RecentHolidays/RecentHolidays';
 import NeedInspiration from '../../Components/NeedInspiration/NeedInspiration';
+import host from '../../Assets/Host';
 
 export default function Home() {
   useEffect(() => {
@@ -19,16 +20,14 @@ export default function Home() {
      (async () => {
        try {
          const Authorization = localStorage.getItem('access_token')
-         console.log(Authorization)
-         const {data} = await axios.get(   
-                        'http://localhost:8000/login/' ,{
+         await axios.get(   
+                        `${host}/login/` ,{
                           withCredentials: true,
                          headers: {
                               Authorization : "Bearer " + Authorization,
                             'Content-Type': 'application/json'
                          }}
                        );
-          console.log(data.message)
       } catch (e) {
         window.location.href = '/'
       }

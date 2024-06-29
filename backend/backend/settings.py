@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure--jeraj-69=s90ad9i)u2eml&*t&wbnyoh0af0hki7m=r)+xb0x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -46,6 +47,9 @@ INSTALLED_APPS = [
 ]
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
+    'http://test-subham.xyz',
+    'https://test-subham.xyz',
+    'test-subham.netlify.app'
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -129,6 +133,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 STATIC_URL = 'static/'
 

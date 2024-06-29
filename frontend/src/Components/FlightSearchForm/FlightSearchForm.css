@@ -98,6 +98,14 @@
 
 }
 
+@media screen and (max-width:912px){
+
+  .flight-form{
+    top: 100%;
+    padding: auto;
+    margin-top: 185px;
+  }
+}
 
 @media screen and (max-width:700px){
 
@@ -105,7 +113,18 @@
     top: 185%;
   }
   .flight-form{
-    top: 80%;
+    top: 110%;
+  }
+
+}
+
+@media screen and (max-width:430px){
+
+  .options{
+    top: 185%;
+  }
+  .flight-form{
+    top: 77%;
   }
 
 }

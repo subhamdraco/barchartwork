@@ -5,7 +5,7 @@ import SecondHeroSection from '../../Components/SecondHeroSection/SecondHeroSect
 export default function Hotels() {
   return (
     <div>
-      <div className="hotels-hero-section"><SecondHeroSection FlightHeroTitle="Comfort and Luxury, Just a Click Away."/></div>
+      <div className="hotels-hero-section"><SecondHeroSection HeroTitle="Comfort and Luxury, Just a Click Away."/></div>
     </div>
   )
 }

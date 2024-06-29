@@ -20,6 +20,7 @@ export default function Login() {
           const {data} = await axios.post('http://localhost:8000/token/',user ,{headers: {'Content-Type': 'application/json'}});
           // Initialize the access & refresh token in localstorage.      
           localStorage.clear();
+          localStorage.setItem('user' , username)
           localStorage.setItem('access_token', data.access);
           localStorage.setItem('refresh_token', data.refresh);
           axios.defaults.headers.common['Authorization'] = 

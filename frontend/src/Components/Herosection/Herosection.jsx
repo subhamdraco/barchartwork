@@ -7,7 +7,7 @@ export default function Herosection() {
   return (
     <div className='hero-section'>
         <Carousel className='car bg-dark'>
-            <Carousel.Item className='carousel-item1 vh-100 rounded-0'>
+            <Carousel.Item className='carousel-item1 vh-100 rounded-0 border-0'>
                 <Carousel.Caption className='h-100 d-flex flex-column align-items-center justify-content-top'>
                     <div className="row h-100">
                         <div className="col-lg-6 d-flex flex-column align-items-start justify-content-center">
@@ -23,7 +23,7 @@ export default function Herosection() {
                     </div>
                 </Carousel.Caption>
             </Carousel.Item>
-            <Carousel.Item className='carousel-item2 vh-100 rounded-0'>
+            <Carousel.Item className='carousel-item2 vh-100 rounded-0 border-0'>
                 <Carousel.Caption className='h-100'>
                     <div className="row h-100">
                         <div className="col-lg-6 d-flex flex-column align-items-start justify-content-center">
@@ -39,7 +39,7 @@ export default function Herosection() {
                     </div>
                 </Carousel.Caption>
             </Carousel.Item>
-            <Carousel.Item className='carousel-item3 vh-100 rounded-0'>
+            <Carousel.Item className='carousel-item3 vh-100 rounded-0 border-0'>
                 <Carousel.Caption className='h-100'>
                     <div className="row h-100">
                     <div className='col-lg-6 d-none d-lg-block'></div>
@@ -56,7 +56,7 @@ export default function Herosection() {
                     </div>
                 </Carousel.Caption>
             </Carousel.Item>
-            <Carousel.Item className='carousel-item4 vh-100 rounded-0'>
+            <Carousel.Item className='carousel-item4 vh-100 rounded-0 border-0'>
                 <Carousel.Caption className='h-100'>
                     <div className="row h-100">
                         <div className="col-lg-6 d-flex flex-column align-items-start justify-content-center">

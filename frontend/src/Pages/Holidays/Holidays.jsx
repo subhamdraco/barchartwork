@@ -3,6 +3,7 @@ import './Holidays.css';
 import SecondHeroSection from '../../Components/SecondHeroSection/SecondHeroSection';
 import host from '../../Assets/Host';
 import axios from "axios";
+import SearchResult from '../SearchResult/SearchResult';
 
 export default function Holidays() {
   useEffect(() => {
@@ -29,6 +30,7 @@ export default function Holidays() {
   return (
     <div>
       <div className="holiday-hero-section"><SecondHeroSection HeroTitle="Discover Your Perfect Getaway"/></div>
+      <SearchResult/>
     </div>
   )
 }

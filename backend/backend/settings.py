@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure--jeraj-69=s90ad9i)u2eml&*t&wbnyoh0af0hki7m=r)+xb0x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'book_flight.apps.BookFlightConfig',
+    'packages.apps.PackagesConfig',
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders'
     
@@ -49,7 +50,6 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://test-subham.xyz',
     'https://test-subham.xyz',
-    'test-subham.netlify.app'
 ]
 
 CORS_ALLOW_CREDENTIALS = True
